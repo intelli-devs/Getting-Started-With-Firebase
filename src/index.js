@@ -16,7 +16,12 @@ import {
   addDoc, //takes 2 args (collection_Ref, Doc_Object)
 
   //deletes a document from a collection
-  deleteDoc //takes 1 arg (doc_ref)
+  deleteDoc, //takes 1 arg (doc_ref)
+
+  //acts as a watch() by listeniing to any change
+  onSnapshot, //takes 2 args
+  
+  query, where
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -37,6 +42,7 @@ const db = getFirestore()
 const colRef = collection(db, 'books')
 
 //get the collection data
+/* 
 getDocs(colRef)
   .then((snapshot) => {
     let books = []
@@ -49,34 +55,42 @@ getDocs(colRef)
       console.log(err.message)
   })
 
+*/
 
+//add a user
 
-  //add a user
-  
-  const addForm = document.querySelector('.add')
-  addForm.addEventListener('submit', (e)=>{
-    e.preventDefault()
+const addForm = document.querySelector('.add')
+addForm.addEventListener('submit', (e) => {
+  e.preventDefault()
 
-    addDoc(colRef, {
-      title: addForm.title.value,
-      author: addForm.author.value
-    })
-    .then(()=>{
+  addDoc(colRef, {
+    title: addForm.title.value,
+    author: addForm.author.value
+  })
+    .then(() => {
       addForm.reset()
     })
-  })
-  
-  //deleting a user
-  
-  const deleteForm = document.querySelector('.delete')
-  deleteForm.addEventListener('submit', (e)=>{
-    e.preventDefault()
+})
 
-    // doc reference
-    const docRef = doc(colRef, deleteForm.id.value)
-    deleteDoc(docRef)
-    .then(()=>{
+//deleting a user
+
+const deleteForm = document.querySelector('.delete')
+deleteForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+
+  // doc reference
+  const docRef = doc(colRef, deleteForm.id.value)
+  deleteDoc(docRef)
+    .then(() => {
       deleteForm.reset()
     })
+})
+
+//real time subscription on database
+onSnapshot(colRef, (snapshot) => {
+  let books = []
+  snapshot.docs.forEach((doc) => {
+    books.push({ ...doc.data(), id: doc.id })
   })
-  
+  console.log(books)
+})
