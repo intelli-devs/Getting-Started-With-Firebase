@@ -1,4 +1,21 @@
 $primary: rgb(9, 157, 216);
+$line: rgba(255, 255, 255, 0.315);
+*, ::before,::after{
+    box-sizing: border-box;
+}
+
 body{
+    padding: 1em;
+    font-family: montserrat;
     background: $primary;
+    margin:2em 12px ;
+    border-radius: 2px;
+    // border: 1px solid rgb(95, 13, 13);
+    box-shadow: .5em 0 1.7em;
+    & .delete{
+        margin-top: 1em;
+        border-top: 2px solid $line;
+        border-bottom: 2px solid $line;
+        padding: 1em;
+    }
 }

@@ -3,10 +3,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="../src/sass/index.css">
     <title>Getting Started with Firebase-9</title>
 </head>
 <body>
+<div id="books__array"></div>
+<form class="add">
+    <label for="title">Title</label>
+    <input type="text" name="title">
+    <label for="author">Author</label>
+    <input type="text" name="author">
+    <button>Add User</button>
+</form>
+<form class="delete">
+    <label for="id">Id</label>
+    <input type="text" name="id">
+    
+    <button>Delete User</button>
+</form>
  
  <script src="./bundle.js"></script>
 </body>

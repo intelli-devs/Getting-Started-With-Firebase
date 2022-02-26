@@ -1,4 +1,22 @@
+*, ::before, ::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
 body {
+  padding: 1em;
+  font-family: montserrat;
   background: #099dd8;
+  margin: 2em 12px;
+  border-radius: 2px;
+  -webkit-box-shadow: .5em 0 1.7em;
+          box-shadow: .5em 0 1.7em;
+}
+
+body .delete {
+  margin-top: 1em;
+  border-top: 2px solid rgba(255, 255, 255, 0.315);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.315);
+  padding: 1em;
 }
 /*# sourceMappingURL=index.css.map */
