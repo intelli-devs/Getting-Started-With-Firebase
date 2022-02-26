@@ -1,6 +1,22 @@
 import { initializeApp } from 'firebase/app'
 import {
-  getFirestore, collection, getDocs, doc, addDoc, deleteDoc
+  //initializes the service of the firestore
+  getFirestore, // takes 0 args
+
+  // gets the reference to a collection 
+  collection,  //2 args (database, collection_name)
+
+  //gets a snapshot of the database and is ran once every time the page is loaded
+  getDocs, // takes 1 arg  (collection_Ref)
+
+  //gets the reference of a single document
+  doc, //takes 3 args (db, collection_name, doc_Id)
+
+  //adds a document to the collection
+  addDoc, //takes 2 args (collection_Ref, Doc_Object)
+
+  //deletes a document from a collection
+  deleteDoc //takes 1 arg (doc_ref)
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -32,7 +48,7 @@ getDocs(colRef)
   .catch((err) => {
       console.log(err.message)
   })
-// doc reference
+
 
 
   //add a user
@@ -56,7 +72,8 @@ getDocs(colRef)
   deleteForm.addEventListener('submit', (e)=>{
     e.preventDefault()
 
-    const docRef = doc(db, 'books', deleteForm.id.value)
+    // doc reference
+    const docRef = doc(colRef, deleteForm.id.value)
     deleteDoc(docRef)
     .then(()=>{
       deleteForm.reset()
