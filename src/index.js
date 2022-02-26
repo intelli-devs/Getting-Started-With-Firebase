@@ -9,6 +9,8 @@ import {
   //gets a snapshot of the database and is ran once every time the page is loaded
   getDocs, // takes 1 arg  (collection_Ref)
 
+  getDoc,// fetches a single document
+
   //gets the reference of a single document
   doc, //takes 3 args (db, collection_name, doc_Id)
 
@@ -103,4 +105,17 @@ onSnapshot(q, (snapshot) => {
   console.log(books)
 })
 
-//
+//fetch single document
+/*const docRef = doc(colRef, 'F9u2h1v02XRYiyUMv8')
+getDoc(docRef)
+.then((doc)=>{
+  console.log(doc.data(), doc.id)
+})
+*/
+
+//listener for a single document
+const docRef = doc(colRef, 'F9u2h1v02XRYiyUMv8')
+getDoc(docRef)
+onSnapshot(docRef,(doc)=>{
+  console.log(doc.data(), doc.id)
+})
