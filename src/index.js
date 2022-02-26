@@ -20,8 +20,12 @@ import {
 
   //acts as a watch() by listeniing to any change
   onSnapshot, //takes 2 args
-  
-  query, where
+
+  query,  //takes 2 args (colRef, where())
+   where, //takes basiclly 3 args (prop, condition, value)
+
+  orderBy, // takes 2 args (prop, order)
+  serverTimestamp 
 } from 'firebase/firestore'
 
 const firebaseConfig = {
@@ -65,7 +69,8 @@ addForm.addEventListener('submit', (e) => {
 
   addDoc(colRef, {
     title: addForm.title.value,
-    author: addForm.author.value
+    author: addForm.author.value,
+    createdAt: serverTimestamp()
   })
     .then(() => {
       addForm.reset()
@@ -86,11 +91,16 @@ deleteForm.addEventListener('submit', (e) => {
     })
 })
 
+//query and ordering 
+const q = query(colRef, where('author','==', 'Fru Boris'), orderBy('title', 'desc'))
+
 //real time subscription on database
-onSnapshot(colRef, (snapshot) => {
+onSnapshot(q, (snapshot) => {
   let books = []
   snapshot.docs.forEach((doc) => {
     books.push({ ...doc.data(), id: doc.id })
   })
   console.log(books)
 })
+
+//
