@@ -1,13 +1,28 @@
 {
   "name": "getting-started-with-firebase-9",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-  
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "webpack",
+    "testbk": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Fru Boris",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/intelli-devs/Getting-Started-With-Firebase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/intelli-devs/Getting-Started-With-Firebase/issues"
+  },
+  "homepage": "https://github.com/intelli-devs/Getting-Started-With-Firebase#readme",
+  "description": "",
+  "devDependencies": {
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2"
+  },
+  "dependencies": {
+    "firebase": "^9.6.7"
+  }
 }
