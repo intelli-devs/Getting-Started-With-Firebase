@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
@@ -6,22 +7,50 @@
     <link rel="stylesheet" href="../src/sass/index.css">
     <title>Getting Started with Firebase-9</title>
 </head>
+
 <body>
-<div id="books__array"></div>
-<form class="add">
-    <label for="title">Title</label>
-    <input type="text" name="title">
-    <label for="author">Author</label>
-    <input type="text" name="author">
-    <button>Add </button>
-</form>
-<form class="delete">
-    <label for="id">Input document ID</label>
-    <input type="text" name="id">
-    
-    <button>Delete document</button>
-</form>
- 
- <script src="./bundle.js"></script>
+    <div id="books__array"></div>
+    <form class="add">
+        <label for="title">Title</label>
+        <input type="text" name="title">
+        <label for="author">Author</label>
+        <input type="text" name="author">
+        <button>Add </button>
+    </form>
+    <form class="delete">
+        <label for="id">Input document ID</label>
+        <input type="text" name="id">
+
+        <button>Delete document</button>
+    </form>
+    <form class="update">
+        <label for="id">Input document ID</label>
+        <input type="text" name="id">
+
+        <button>Update document</button>
+    </form>
+    <section class="auth">
+        <div class="sign-up">
+            <form class="createUser">
+                <label for="email">Email</label>
+                <input type="email" name="email">
+                <label for="password">Password</label>
+                <input type="password" name="password">
+                <button>Create User </button>
+            </form>
+
+            <form class="login">
+                <label for="email">Email</label>
+                <input type="email" name="email">
+                <label for="password">Password</label>
+                <input type="password" name="password">
+                <button>Login</button>
+            </form>
+                <button class="logout">Logout</button>
+        </div>
+    </section>
+
+    <script src="./bundle.js"></script>
 </body>
+
 </html>

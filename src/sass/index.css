@@ -19,4 +19,32 @@ body .delete {
   border-bottom: 2px solid rgba(255, 255, 255, 0.315);
   padding: 1em;
 }
+
+.auth {
+  margin-top: 1em;
+  border-top: 2px solid rgba(255, 255, 255, 0.315);
+  padding: 1em;
+}
+
+.auth .createUser {
+  border-radius: 1em;
+  margin: 1em auto;
+  padding: 2em;
+  background: #054158;
+  color: whitesmoke;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.315);
+}
+
+.auth .logout {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.auth .login {
+  border-radius: 1em;
+  margin: 1em auto;
+  padding: 2em;
+  background: #054158;
+  color: whitesmoke;
+}
 /*# sourceMappingURL=index.css.map */

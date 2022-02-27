@@ -27,8 +27,18 @@ import {
    where, //takes basiclly 3 args (prop, condition, value)
 
   orderBy, // takes 2 args (prop, order)
-  serverTimestamp 
+  serverTimestamp, 
+
+  updateDoc //
 } from 'firebase/firestore'
+import {
+  getAuth, //Authentification service
+  createUserWithEmailAndPassword, //creating account with
+  signInWithEmailAndPassword,
+  deleteUser,
+  signOut //logging out
+}
+from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEoLUt8FXMzhYLsbWjtPwOz3EhvGBkUQM",
@@ -43,6 +53,7 @@ initializeApp(firebaseConfig)
 
 //init the services
 const db = getFirestore()
+const auth = getAuth()
 
 //collection ref
 const colRef = collection(db, 'books')
@@ -114,8 +125,74 @@ getDoc(docRef)
 */
 
 //listener for a single document
-const docRef = doc(colRef, 'F9u2h1v02XRYiyUMv8')
+{
+  const docRef = doc(colRef, 'F9u2h1v02XRYiyUMv8')
 getDoc(docRef)
 onSnapshot(docRef,(doc)=>{
   console.log(doc.data(), doc.id)
+})
+}
+
+//updating document
+const updateForm = document.querySelector('.update')
+updateForm.addEventListener('submit', (e)=>{
+  e.preventDefault()
+
+  const docRef = doc(colRef, updateForm.id.value)
+  updateDoc(docRef, { 
+    title: 'Titan 3'
+  })
+  .then(()=>{
+    updateForm.reset()
+  })
+  
+})
+
+//user query
+const createUser = document.querySelector('.createUser')
+createUser.addEventListener('submit', (e)=>{
+  e.preventDefault()
+
+ const email = createUser.email.value
+ const password = createUser.password.value
+
+  //Creating or signing users
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((cred) => {
+    console.log("User created:", cred.user)
+    createUser.reset()
+  })
+  .catch((err) => {
+    console.log(err.message) 
+    
+  })
+})
+
+//logout
+const logout = document.querySelector('.logout')
+logout.addEventListener('click', ()=>{
+
+
+  signOut(auth)
+  .then(()=>{
+    console.log("user logged Out")
+  }).catch(err => console.log(err.message))
+})
+
+//login user query
+const login = document.querySelector('.login')
+login.addEventListener('submit', (e)=>{
+  e.preventDefault()
+ let email = login.email.value
+ let password = login.password.value
+
+  //login
+  signInWithEmailAndPassword(auth, email, password)
+  .then((cred)=>{
+    console.log("User Logged In:", cred.user)
+    login.reset()
+  })
+  .catch((err)=>{
+    console.log(err.message)
+  })
 })
