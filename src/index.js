@@ -24,10 +24,10 @@ import {
   onSnapshot, //takes 2 args
 
   query,  //takes 2 args (colRef, where())
-   where, //takes basiclly 3 args (prop, condition, value)
+  where, //takes basiclly 3 args (prop, condition, value)
 
   orderBy, // takes 2 args (prop, order)
-  serverTimestamp, 
+  serverTimestamp,
 
   updateDoc //
 } from 'firebase/firestore'
@@ -36,9 +36,10 @@ import {
   createUserWithEmailAndPassword, //creating account with
   signInWithEmailAndPassword,
   deleteUser,
-  signOut //logging out
+  signOut, //logging out
+  onAuthStateChanged
 }
-from 'firebase/auth'
+  from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEoLUt8FXMzhYLsbWjtPwOz3EhvGBkUQM",
@@ -105,10 +106,10 @@ deleteForm.addEventListener('submit', (e) => {
 })
 
 //query and ordering 
-const q = query(colRef, where('author','==', 'Fru Boris'), orderBy('title', 'desc'))
+const q = query(colRef, where('author', '==', 'Fru Boris'), orderBy('title', 'desc'))
 
 //real time subscription on database
-onSnapshot(q, (snapshot) => {
+const unsubCol = onSnapshot(q, (snapshot) => {
   let books = []
   snapshot.docs.forEach((doc) => {
     books.push({ ...doc.data(), id: doc.id })
@@ -126,73 +127,90 @@ getDoc(docRef)
 
 //listener for a single document
 {
-  const docRef = doc(colRef, 'F9u2h1v02XRYiyUMv8')
-getDoc(docRef)
-onSnapshot(docRef,(doc)=>{
-  console.log(doc.data(), doc.id)
-})
+  const docRef = doc(colRef, '169sQviWaSMClg2kLzGW')
+  getDoc(docRef)
+  const unsubDoc = onSnapshot(docRef, (doc) => {
+    console.log(doc.data(), doc.id)
+  })
 }
 
 //updating document
 const updateForm = document.querySelector('.update')
-updateForm.addEventListener('submit', (e)=>{
+updateForm.addEventListener('submit', (e) => {
   e.preventDefault()
 
   const docRef = doc(colRef, updateForm.id.value)
-  updateDoc(docRef, { 
+  updateDoc(docRef, {
     title: 'Titan 3'
   })
-  .then(()=>{
-    updateForm.reset()
-  })
-  
+    .then(() => {
+      updateForm.reset()
+    })
+
 })
 
 //user query
 const createUser = document.querySelector('.createUser')
-createUser.addEventListener('submit', (e)=>{
+createUser.addEventListener('submit', (e) => {
   e.preventDefault()
 
- const email = createUser.email.value
- const password = createUser.password.value
+  const email = createUser.email.value
+  const password = createUser.password.value
 
   //Creating or signing users
   createUserWithEmailAndPassword(auth, email, password)
-  .then((cred) => {
-    console.log("User created:", cred.user)
-    createUser.reset()
-  })
-  .catch((err) => {
-    console.log(err.message) 
-    
-  })
+    .then((cred) => {
+      // console.log("User created:", cred.user)
+      createUser.reset()
+    })
+    .catch((err) => {
+      console.log(err.message)
+
+    })
 })
 
 //logout
 const logout = document.querySelector('.logout')
-logout.addEventListener('click', ()=>{
+logout.addEventListener('click', () => {
 
 
   signOut(auth)
-  .then(()=>{
-    console.log("user logged Out")
-  }).catch(err => console.log(err.message))
+    .then(() => {
+      // console.log("user logged Out")
+    }).catch(err => console.log(err.message))
 })
 
 //login user query
 const login = document.querySelector('.login')
-login.addEventListener('submit', (e)=>{
+login.addEventListener('submit', (e) => {
   e.preventDefault()
- let email = login.email.value
- let password = login.password.value
+  let email = login.email.value
+  let password = login.password.value
 
   //login
   signInWithEmailAndPassword(auth, email, password)
-  .then((cred)=>{
-    console.log("User Logged In:", cred.user)
-    login.reset()
-  })
-  .catch((err)=>{
-    console.log(err.message)
-  })
+    .then((cred) => {
+      // console.log("User Logged In:", cred.user)
+      login.reset()
+    })
+    .catch((err) => {
+      console.log(err.message)
+    })
 })
+
+//auth change listener
+const unsubUser = onAuthStateChanged(auth, (user) => {
+  console.log('user state changed', user)
+})
+
+//unsubcribing to subscriptions
+const unsub = document.querySelector('.unsub')
+unsub.addEventListener('click', () => {
+  console.log("unsubcription complete")
+  unsubCol()
+  unsubDoc()
+  unsubUser()
+  
+
+})
+
